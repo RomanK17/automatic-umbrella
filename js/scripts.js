@@ -35,8 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     // Timer
-
-    const deadline = '2023-04-11';
+    // true discount
+    // const deadline = '2023-04-11';
+    // fake discount
+    const deadline = new Date(Date.now() + 10000000);
 
     function getRemaininngTime(endTime) {
         const remainingTime = Date.parse(endTime) - Date.parse(new Date()),
