@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // cards for dayMenu
 
     class MenuCard {
-        constructor(imgSrc, alt, title, description, price, parentDiv) {
+        constructor(imgSrc, alt, title, description, price, parentDiv, ...classes) {
             this.imgSrc = imgSrc;
             this.alt = alt;
             this.title = title;
@@ -151,24 +151,29 @@ document.addEventListener('DOMContentLoaded', () => {
             this.parent = document.querySelector(parentDiv);
             this.currencyRate = 10;
             this.convertCurrency();
+            this.classes = classes;
         }
         convertCurrency() {
             this.price = this.price * this.currencyRate;
         }
         render() {
             const newElem = document.createElement('div');
+            if (this.classes.length === 0) {
+                this.classes = 'menu__item';
+                newElem.classList.add(this.classes)
+            } else {
+                this.classes.forEach(className => newElem.classList.add(className));
+            }
             newElem.innerHTML =
-                `<div class="menu__item">
-                <img src=${this.imgSrc} alt=${this.alt} />
+                `<img src=${this.imgSrc} alt=${this.alt} />
                 <h3 class="menu__item-subtitle">${this.title}</h3>
                 <div class="menu__item-descr">
 ${this.description}
                 </div>
                 <div class="menu__item-divider"></div>
                 <div class="menu__item-price">
-                <div class="menu__item-cost">Цена:</div>
-                <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
-                </div>
+                    <div class="menu__item-cost">Цена:</div>
+                    <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
                 </div>`;
             this.parent.append(newElem);
         }
@@ -181,7 +186,9 @@ ${this.description}
         'Меню "Фитнес"',
         'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
         229,
-        '[data-containerMenu]'
+        '[data-containerMenu]',
+        'menu__item',
+        'big'
     ).render();
 
     new MenuCard(
